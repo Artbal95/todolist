@@ -2,7 +2,7 @@ const Todo = require("../schema/todos.schema")
 
 exports.getAll = async (req, res) => {
     try {
-        const {page, sort} = req.query
+        const {page = 1, sort = {name: 1}} = req.query
         const list = await Todo.find({}, null, {
             skip: page,
             limit: 3,

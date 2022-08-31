@@ -12,15 +12,6 @@ const Button: ComponentStyleConfig = {
     bg: "primary",
     color: "whiteAlpha.900",
     outline: "unset",
-    _active: {
-      bg: "inherit"
-    },
-    _hover: {
-      bg: "inherit"
-    },
-    _focus: {
-      bg: "inherit"
-    }
   },
   sizes: {
     md: {
@@ -35,17 +26,12 @@ const Button: ComponentStyleConfig = {
       color: "whiteAlpha.900",
       transition: ".15s",
       _active: {
-        bg: "primary",
         opacity: ".8",
         transform: "translateY(2px)"
       },
       _hover: {
-        bg: "primary",
         opacity: ".8",
       },
-      _focus: {
-        bg: "primary",
-      }
     },
     outline: {
       bg: "outline",
