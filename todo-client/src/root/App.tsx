@@ -1,9 +1,5 @@
-import {Button} from "@chakra-ui/react";
+import Home from "../pages/Home";
 
-const App = (): JSX.Element => {
-  return (
-    <Button>Send</Button>
-  )
-}
+const App = (): JSX.Element => <Home/>
 
 export default App
