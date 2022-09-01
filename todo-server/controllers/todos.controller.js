@@ -2,33 +2,41 @@ const Todo = require("../schema/todos.schema")
 
 exports.getAll = async (req, res) => {
     try {
-        const {page = 1, sort = {name: 1}} = req.query
-        const list = await Todo.find({}, null, {
-            skip: page,
+        const {page = 1, sort = ["name", 1]} = req.query
+        console.log(sort)
+        const options = {
+            page,
             limit: 3,
-            sort
-        })
+            sort: {
+                [sort[0]]: sort[1]
+            }
+        };
+        const {docs, ...info} = await Todo.paginate({}, options)
         res.status(200).json({
-            list
+            todos: docs,
+            info: info
         })
     } catch (e) {
         console.log("Can`t Find Any Todos List")
-        res.status(404).json({
-            list: []
-        })
+        res.status(404).json([])
     }
 }
 
 exports.createTodo = async (req, res) => {
     try {
         const {name, email, task} = req.body
-        if(!name && !email && !task){
-            throw new Error("You must write All inputs")
-        }
-        const newTodo = new Todo({name, email, task, status: false})
-        await newTodo.save()
+        const {page = 1, sort = {name: 1}} = req.query
+        console.log({name, email, task}, "{name, email, task}")
+        await new Todo({name, email, task, status: false}).save()
+        const options = {
+            page,
+            limit: 3,
+            sort
+        };
+        const {docs, ...info} = await Todo.paginate({}, options)
         res.status(201).json({
-            newTodo
+            todos: docs,
+            info: info
         })
     } catch (e) {
         console.log("Can`t Find Any Todos List")
@@ -46,9 +54,7 @@ exports.updateTodoById = async (req, res) => {
             task,
             status
         }, { new: true })
-        res.status(201).json({
-            newTodo
-        })
+        res.status(201).json(newTodo)
     } catch (e) {
         console.log("Can`t Find Any Todos List")
     }

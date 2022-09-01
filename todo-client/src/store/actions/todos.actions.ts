@@ -16,7 +16,7 @@ export const updateTodosAction: TodosActionType = (todos) => ({
     todos
 })
 
-export const loadingTodosAction: TodosLoadingActionType = (todosLoading) => ({
+export const loadingTodosAction: TodosLoadingActionType = (todosLoading: boolean) => ({
     type: TodosTypes.LOADING_TODOS,
     todosLoading
 })

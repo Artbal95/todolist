@@ -1,11 +1,13 @@
 import {Box, Flex} from "@chakra-ui/react";
 import NewTask from "./components/NewTask/NewTask";
+import Auth from "./components/Auth/Auth";
 
 const Settings = (): JSX.Element => {
     return (
-        <Box>
+        <Flex alignItems={"center"} justifyContent={"space-between"} mb={"50px"}>
             <NewTask />
-        </Box>
+            <Auth />
+        </Flex>
     )
 }
 

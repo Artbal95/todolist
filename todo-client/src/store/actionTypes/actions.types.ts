@@ -1,5 +1,6 @@
 export enum AuthTypes {
-    LOGIN = "LOGIN"
+    LOGIN = "LOGIN",
+    PAGINATION = "PAGINATION"
 }
 
 export enum TodosTypes {

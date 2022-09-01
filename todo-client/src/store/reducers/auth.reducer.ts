@@ -4,7 +4,19 @@ import {IAuthInitialState} from "../types/auth.types";
 import {ReducerType} from "../types/global.types";
 
 const initialState: IAuthInitialState = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    pagination: {
+        page: 1,
+        limit: 3,
+        hasNextPage: false,
+        hasPrevPage: false,
+        nextPage: null,
+        prevPage: null,
+        pagingCounter: 0,
+        totalDocs: 0,
+        totalPages: 0,
+        sort: ["name", 1]
+    }
 }
 
 const reducer: ReducerType<IAuthInitialState> = (state = initialState, action) => {
@@ -13,6 +25,11 @@ const reducer: ReducerType<IAuthInitialState> = (state = initialState, action) =
             return {
                 ...state,
                 isLoggedIn: action.isLoggedIn
+            }
+        case AuthTypes.PAGINATION:
+            return {
+                ...state,
+                pagination: action.pagination
             }
         default:
             return state

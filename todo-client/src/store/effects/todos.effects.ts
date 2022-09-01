@@ -1,13 +1,17 @@
 import {Effect} from "../types/global.types";
 import {createTodosAction, getAllTodosAction, loadingTodosAction, updateTodosAction} from "../actions/todos.actions";
 import {CreateTodosType, SortType, UpdateTodosType} from "../../types/todos.types";
+import {paginationAction} from "../actions/auth.actions";
 
-export const getAllTodosEffect = (page: number = 1, sort: SortType = {name: 1}): Effect => {
-    return async (dispatch, getState, {TodosServices}) => {
+export const getAllTodosEffect = (): Effect => {
+    return async (dispatch, getState, {todosService}) => {
         dispatch(loadingTodosAction(true))
         try {
-            const res = await TodosServices.getAllTodosService({page, sort})
-            dispatch(getAllTodosAction(res.data))
+            const {page, sort} = getState().auth.pagination
+            const res = await todosService.getAllTodosService({page, sort})
+            const {todos, info} = res.data
+            dispatch(getAllTodosAction(todos))
+            dispatch(paginationAction({...info, sort}))
             dispatch(loadingTodosAction(false))
         } catch (e: any) {
             console.log("getAllTodosEffect", e.message)
@@ -17,11 +21,14 @@ export const getAllTodosEffect = (page: number = 1, sort: SortType = {name: 1}):
 }
 
 export const createTodosEffect = (body: CreateTodosType): Effect => {
-    return async (dispatch, getState, {TodosServices}) => {
+    return async (dispatch, getState, Services) => {
         dispatch(loadingTodosAction(true))
         try {
-            const res = await TodosServices.createTodosService(body)
-            dispatch(createTodosAction(res.data))
+            const {sort} = getState().auth.pagination
+            const res = await Services.todosService.createTodosService(body)
+            const {todos, info} = res.data
+            dispatch(createTodosAction(todos))
+            dispatch(paginationAction({...info, sort}))
             dispatch(loadingTodosAction(false))
         } catch (e: any) {
             console.log("createTodosEffect", e.message)
@@ -31,10 +38,10 @@ export const createTodosEffect = (body: CreateTodosType): Effect => {
 }
 
 export const updateTodosEffect = (id: string, body: UpdateTodosType): Effect => {
-    return async (dispatch, getState, {TodosServices}) => {
+    return async (dispatch, getState, {todosService}) => {
         dispatch(loadingTodosAction(true))
         try {
-            const res = await TodosServices.updateTodosServices(id, body)
+            const res = await todosService.updateTodosServices(id, body)
             dispatch(updateTodosAction(res.data))
             dispatch(loadingTodosAction(false))
         } catch (e: any) {
