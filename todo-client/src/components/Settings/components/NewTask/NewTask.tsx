@@ -13,23 +13,23 @@ const NewTask = (): JSX.Element => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     return (
         <>
-            <Button onClick={onOpen}>Add New Task</Button>
+            <Button colorScheme={"orange"} onClick={onOpen}>Add New Task</Button>
             <Modal isCentered closeOnOverlayClick={true} isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay
                     bg={"none"}
                     backdropFilter={"auto"}
                     backdropBlur={"2px"}
                 />
-                <ModalContent>
-                    <ModalHeader>Add New Task</ModalHeader>
+                <ModalContent boxShadow={"dark-lg"}>
+                    <ModalHeader textAlign={"center"}>Add New Task</ModalHeader>
                     <ModalBody>
                         Lorem ipsum dolor sit amet.
                     </ModalBody>
-                    <ModalFooter>
-                        <Button bg={"secondary"}>
+                    <ModalFooter gap={"20px"}>
+                        <Button colorScheme={"teal"}>
                             Save
                         </Button>
-                        <Button variant={"outline"} onClick={onClose}>
+                        <Button colorScheme={"red"} variant={"outline"} onClick={onClose}>
                             Cancel
                         </Button>
                     </ModalFooter>
