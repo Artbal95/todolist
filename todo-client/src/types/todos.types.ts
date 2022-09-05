@@ -34,3 +34,8 @@ export interface ITodoService {
     todos: ITodo[],
     info: IInfo
 }
+
+export interface ITodoUpdateService {
+    todo: ITodo | null
+    message: string
+}

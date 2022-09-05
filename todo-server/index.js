@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt")
-const User = require("./src/schema/user.schema")
+const User = require("./schema/user.schema")
 
-const app = require("./src/root/app")
+const app = require("./root/app")
 
-const {PORT, MONGODB_DATABASE, MONGODB_PASS} = require("./src/config/config");
+const {PORT, MONGODB_DATABASE, MONGODB_PASS} = require("./config/config");
 
 
 (function () {

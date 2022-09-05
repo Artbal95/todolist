@@ -6,7 +6,8 @@ const UserSchema = new Schema({
         required: true,
         unique: true,
     },
-    password: String
+    password: String,
+    active: Boolean
 })
 
 module.exports = model("User", UserSchema)

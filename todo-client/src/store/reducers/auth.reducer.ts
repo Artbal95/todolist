@@ -4,6 +4,7 @@ import {IAuthInitialState} from "../types/auth.types";
 import {ReducerType} from "../types/global.types";
 
 const initialState: IAuthInitialState = {
+    email: "",
     isLoggedIn: false,
     pagination: {
         page: 1,
@@ -25,6 +26,11 @@ const reducer: ReducerType<IAuthInitialState> = (state = initialState, action) =
             return {
                 ...state,
                 isLoggedIn: action.isLoggedIn
+            }
+        case AuthTypes.USER:
+            return {
+                ...state,
+                email: action.email
             }
         case AuthTypes.PAGINATION:
             return {

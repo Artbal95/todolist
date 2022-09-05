@@ -1,7 +1,9 @@
 import {Effect} from "../types/global.types";
 import {createTodosAction, getAllTodosAction, loadingTodosAction, updateTodosAction} from "../actions/todos.actions";
-import {CreateTodosType, SortType, UpdateTodosType} from "../../types/todos.types";
-import {paginationAction} from "../actions/auth.actions";
+import {CreateTodosType, UpdateTodosType} from "../../types/todos.types";
+import {loginAction, paginationAction, userAction} from "../actions/auth.actions";
+import {CreateToastFnReturn} from "@chakra-ui/toast";
+import toastOptions from "../../theme/ToastOptions";
 
 export const getAllTodosEffect = (): Effect => {
     return async (dispatch, getState, {todosService}) => {
@@ -37,12 +39,24 @@ export const createTodosEffect = (body: CreateTodosType): Effect => {
     }
 }
 
-export const updateTodosEffect = (id: string, body: UpdateTodosType): Effect => {
+export const updateTodosEffect = (id: string, body: UpdateTodosType, toast: CreateToastFnReturn): Effect => {
     return async (dispatch, getState, {todosService}) => {
         dispatch(loadingTodosAction(true))
         try {
+            const {todos} = getState().todo
+            const updateTodo = [...todos]
+            const updateTodosIndex = todos.findIndex(todo => todo._id === id)
             const res = await todosService.updateTodosServices(id, body)
-            dispatch(updateTodosAction(res.data))
+            const {todo, message} = res.data
+            if (todo) {
+                updateTodo[updateTodosIndex] = todo
+                dispatch(updateTodosAction(updateTodo))
+                toast(toastOptions("Todo", message, "success"))
+            } else {
+                dispatch(loginAction(false))
+                dispatch(userAction(""))
+                toast(toastOptions("Todo", message, "error"))
+            }
             dispatch(loadingTodosAction(false))
         } catch (e: any) {
             console.log("updateTodosEffect", e.message)

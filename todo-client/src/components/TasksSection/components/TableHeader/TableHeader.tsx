@@ -1,7 +1,7 @@
 import {Text, Th, Thead, Tr} from "@chakra-ui/react";
 
 import {ITodo} from "../../../../types/todos.types";
-import {useCallback} from "react";
+import {useCallback, useEffect, useState} from "react";
 import useAppDispatch from "../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../hooks/useAppSelector";
 import {paginationEffect} from "../../../../store/effects/auth.effects";
@@ -11,7 +11,8 @@ const TableHeader = (): JSX.Element => {
 
     const dispatch = useAppDispatch()
 
-    const {page, sort} = useAppSelector(state => state.auth.pagination)
+    const {isLoggedIn, pagination} = useAppSelector(state => state.auth)
+    const {page, sort} = pagination
 
     const header: Array<keyof Omit<ITodo, "isUpdated">> = ["name", "email", "task", "status"]
 
@@ -43,6 +44,7 @@ const TableHeader = (): JSX.Element => {
                             </Text>}
                     </Th>
                 ))}
+                {isLoggedIn && <Th>###</Th>}
             </Tr>
         </Thead>
     )

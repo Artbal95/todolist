@@ -4,6 +4,7 @@ export interface IAuthLoginDTO {
 }
 
 export interface IReturnAuthMessage {
-    status: boolean,
+    email: string
+    status: boolean
     message: string
 }

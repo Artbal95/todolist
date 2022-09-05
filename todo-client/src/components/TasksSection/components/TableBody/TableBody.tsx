@@ -1,6 +1,8 @@
 import {Checkbox, Tbody, Td, Tr} from "@chakra-ui/react";
 import {CheckIcon, CloseIcon} from "@chakra-ui/icons";
 
+import Edit from "./components/Edit/Edit";
+
 import useAppSelector from "../../../../hooks/useAppSelector";
 
 const TableBody = (): JSX.Element => {
@@ -12,14 +14,19 @@ const TableBody = (): JSX.Element => {
 
     return (
         <Tbody>
-            {todos.map(({_id, name, email, task, status}) => (
-                <Tr key={_id}>
-                    {colBody(name)}
-                    {colBody(email)}
-                    {colBody(task)}
+            {todos.map((todo) => (
+                <Tr key={todo._id}>
+                    {colBody(todo.name)}
+                    {colBody(todo.email)}
+                    {colBody(todo.task)}
                     <Td textAlign={"center"}>
-                        <Checkbox icon={status ? <CheckIcon /> : <CloseIcon />} colorScheme={status ? "green" : "red"} defaultChecked={true} isReadOnly={!isLoggedIn} />
+                        <Checkbox icon={todo.status ? <CheckIcon /> : <CloseIcon />} colorScheme={todo.status ? "green" : "red"} defaultChecked={true} isReadOnly />
                     </Td>
+                    {isLoggedIn && (
+                        <Td>
+                            <Edit todo={todo}/>
+                        </Td>
+                    )}
                 </Tr>
             ))}
         </Tbody>

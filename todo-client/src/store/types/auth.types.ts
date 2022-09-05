@@ -6,9 +6,11 @@ export interface PaginationType extends IInfo {
 }
 
 export interface IAuthInitialState {
+    email: string
     isLoggedIn: boolean
     pagination: PaginationType
 }
 
 export type LoginActionType = ActionReturnType<IAuthInitialState, "isLoggedIn">
+export type UserActionType = ActionReturnType<IAuthInitialState, "email">
 export type PaginationActionType = ActionReturnType<IAuthInitialState, "pagination">

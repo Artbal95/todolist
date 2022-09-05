@@ -1,43 +1,46 @@
 import {IAuthLoginDTO} from "../../types/auth.types";
-import {Effect, ToastType} from "../types/global.types";
+import {Effect} from "../types/global.types";
 import {CreateToastFnReturn} from "@chakra-ui/toast";
-import {loginAction, paginationAction} from "../actions/auth.actions";
+import {loginAction, paginationAction, userAction} from "../actions/auth.actions";
 import {SortType} from "../../types/todos.types";
 import {getAllTodosAction, loadingTodosAction} from "../actions/todos.actions";
-import {PaginationType} from "../types/auth.types";
-
-const toastOption: ToastType = (title, description, status) => ({
-    title,
-    description,
-    status,
-    position: 'top-right',
-    duration: 3000,
-    isClosable: true,
-})
+import toastOptions from "../../theme/ToastOptions";
 
 export const loginEffect = (body: IAuthLoginDTO, toast: CreateToastFnReturn): Effect => {
     return async (dispatch, getState, {authService}) => {
         try {
             const res = await authService.loginService(body)
-            const {status, message} = res.data
+            const {email, status, message} = res.data
             if (status) {
                 dispatch(loginAction(true))
-                toast(toastOption("Account Auth", message, "success"))
+                dispatch(userAction(email))
+                toast(toastOptions("Account Auth", message, "success"))
             } else {
                 dispatch(loginAction(false))
-                toast(toastOption("Account Auth", message, "error"))
+                toast(toastOptions("Account Auth", message, "error"))
             }
         } catch (e: any) {
             console.log("loginEffect", e.message)
-            toast(toastOption("Account Auth", e.message, "error"))
+            toast(toastOptions("Account Auth", e.message, "error"))
         }
     }
 }
 
 export const signOutEffect = (toast: CreateToastFnReturn): Effect => {
-    return (dispatch) => {
-        dispatch(loginAction(false))
-        toast(toastOption("Account Auth", "You Successfully Sign Out", "success"))
+    return async (dispatch, getState, {authService}) => {
+        try {
+            const {email} = getState().auth
+
+            const res = await authService.signOutService(email)
+            const {message} = res.data
+
+            dispatch(loginAction(false))
+            dispatch(userAction(""))
+
+            toast(toastOptions("Account Auth", message, "success"))
+        } catch (e: any) {
+            console.log("signOutEffect", e.message)
+        }
     }
 }
 
