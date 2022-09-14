@@ -1,7 +1,7 @@
-import {Action, AnyAction, Reducer, ThunkAction} from "@reduxjs/toolkit";
-import {AppDispatch, RootState, ServiceType} from "../index";
-import {UseToastOptions} from "@chakra-ui/toast";
-import {AlertStatus} from "@chakra-ui/alert";
+import { Action, Reducer, ThunkAction } from '@reduxjs/toolkit'
+import { RootState, ServiceType } from '../index'
+import { UseToastOptions } from '@chakra-ui/toast'
+import { AlertStatus } from '@chakra-ui/alert'
 
 export type ActionReturnType<T, K extends keyof T> = (arg: ValueOf<Pick<T, K>>) => Pick<T, K> & Action<string>
 

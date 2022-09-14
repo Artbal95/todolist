@@ -1,4 +1,4 @@
-type BreakpointsKeyType = "sm" | "md" | "lg" | "xl" | "2xl"
+type BreakpointsKeyType = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 type BreakpointsType = {
   [key in BreakpointsKeyType]: string
@@ -9,7 +9,7 @@ const breakpoints: BreakpointsType = {
   md: '768px',
   lg: '992px',
   xl: '1366px',
-  '2xl': '1536px',
+  '2xl': '1536px'
 }
 
 export default breakpoints

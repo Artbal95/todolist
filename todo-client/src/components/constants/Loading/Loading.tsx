@@ -1,4 +1,4 @@
-import c from "./Loading.module.css"
+import c from './Loading.module.css'
 
 const Loading = (): JSX.Element => (
     <div className={c.Loading}>
